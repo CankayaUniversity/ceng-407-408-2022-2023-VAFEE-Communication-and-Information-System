@@ -20,3 +20,4 @@ VAFEE Communication and Information System
 - [Software Design Description - (SDD)](https://github.com/CankayaUniversity/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/wiki/Software-Design-Description-(SDD))
 - [Project Web Site](https://vafee.netlify.app/)
 - [Project Report](https://github.com/CankayaUniversity/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/wiki/Project-Report)
+- [Project Presentation](https://github.com/CankayaUniversity/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/wiki/CENG-407-Presentation)
