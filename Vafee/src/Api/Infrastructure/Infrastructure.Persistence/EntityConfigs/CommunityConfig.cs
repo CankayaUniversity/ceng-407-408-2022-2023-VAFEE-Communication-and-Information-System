@@ -19,12 +19,10 @@ namespace Infrastructure.Persistence.EntityConfigs
                 .HasForeignKey(x => x.CommunityId);
 
             builder
-                .HasMany(x => x.Students)
-                .WithMany(x => x.Communities);
+                .HasMany(x => x.Users)
+                .WithMany(u => u.Communities);
 
-            builder
-                .HasMany(x => x.Instructors)
-                .WithMany(x => x.Communities);
+            
 
 
         }

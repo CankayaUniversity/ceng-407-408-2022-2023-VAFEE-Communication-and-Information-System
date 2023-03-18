@@ -7,7 +7,11 @@ namespace WebApi.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
-
+        [HttpGet]
+        public async Task<string> Test()
+        {
+            return Guid.NewGuid().ToString();
+        }
 
         
     }

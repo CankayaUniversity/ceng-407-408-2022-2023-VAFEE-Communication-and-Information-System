@@ -10,7 +10,7 @@ namespace Api.Domain.Models
     public class Instructor : User
     {
 
-        public List<Course> Courses { get; set; }
-        public List<Community> Communities { get; set; }
+        
+        
     }
 }

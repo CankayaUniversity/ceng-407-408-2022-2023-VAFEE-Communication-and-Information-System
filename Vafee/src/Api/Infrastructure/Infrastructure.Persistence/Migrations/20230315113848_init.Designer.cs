@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(VafeeContext))]
-    [Migration("20230312180845_init")]
+    [Migration("20230315113848_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -20,62 +20,12 @@ namespace Infrastructure.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Api.Domain.Models.Community", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DepartmentId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.ToTable("Communities");
-                });
-
-            modelBuilder.Entity("Api.Domain.Models.Course", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("DepartmentId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("InstructorId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("InstructorId");
-
-                    b.ToTable("Courses");
-                });
-
-            modelBuilder.Entity("Api.Domain.Models.Department", b =>
+            modelBuilder.Entity("Api.Domain.Models.BaseEntity", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("text");
@@ -86,37 +36,9 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
-                });
+                    b.ToTable((string)null);
 
-            modelBuilder.Entity("Api.Domain.Models.Event", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Events");
+                    b.UseTpcMappingStrategy();
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Identity.Role", b =>
@@ -158,10 +80,6 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("DepartmentId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -213,7 +131,13 @@ namespace Infrastructure.Persistence.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
+                    b.Property<string>("UserType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -224,63 +148,24 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
+                    b.HasDiscriminator<string>("UserType").HasValue("User");
 
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("Api.Domain.Models.Room", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("CommunityId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CommunityId");
-
-                    b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("CommunityInstructor", b =>
+            modelBuilder.Entity("CommunityUser", b =>
                 {
                     b.Property<string>("CommunitiesId")
                         .HasColumnType("text");
 
-                    b.Property<string>("InstructorsId")
+                    b.Property<string>("UsersId")
                         .HasColumnType("text");
 
-                    b.HasKey("CommunitiesId", "InstructorsId");
+                    b.HasKey("CommunitiesId", "UsersId");
 
-                    b.HasIndex("InstructorsId");
+                    b.HasIndex("UsersId");
 
-                    b.ToTable("CommunityInstructor");
-                });
-
-            modelBuilder.Entity("CommunityStudent", b =>
-                {
-                    b.Property<string>("CommunitiesId")
-                        .HasColumnType("text");
-
-                    b.Property<string>("StudentsId")
-                        .HasColumnType("text");
-
-                    b.HasKey("CommunitiesId", "StudentsId");
-
-                    b.HasIndex("StudentsId");
-
-                    b.ToTable("CommunityStudent");
+                    b.ToTable("CommunityUser");
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
@@ -404,16 +289,111 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Api.Domain.Models.Instructor", b =>
+            modelBuilder.Entity("RoomUser", b =>
                 {
-                    b.HasBaseType("Api.Domain.Models.Identity.User");
+                    b.Property<string>("RoomsId")
+                        .HasColumnType("text");
 
-                    b.Property<string>("RoomId")
+                    b.Property<string>("UsersId")
+                        .HasColumnType("text");
+
+                    b.HasKey("RoomsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("RoomUser");
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Community", b =>
+                {
+                    b.HasBaseType("Api.Domain.Models.BaseEntity");
+
+                    b.Property<string>("DepartmentId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasIndex("DepartmentId");
 
-                    b.HasIndex("RoomId");
+                    b.ToTable("Communities");
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Course", b =>
+                {
+                    b.HasBaseType("Api.Domain.Models.BaseEntity");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("DepartmentId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("InstructorId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("InstructorId");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Department", b =>
+                {
+                    b.HasBaseType("Api.Domain.Models.BaseEntity");
+
+                    b.ToTable("Departments");
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Event", b =>
+                {
+                    b.HasBaseType("Api.Domain.Models.BaseEntity");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Room", b =>
+                {
+                    b.HasBaseType("Api.Domain.Models.BaseEntity");
+
+                    b.Property<string>("CommunityId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasIndex("CommunityId");
+
+                    b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Instructor", b =>
+                {
+                    b.HasBaseType("Api.Domain.Models.Identity.User");
 
                     b.HasDiscriminator().HasValue("Instructor");
                 });
@@ -422,26 +402,17 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasBaseType("Api.Domain.Models.Identity.User");
 
-                    b.Property<string>("RoomId")
+                    b.Property<string>("Number")
+                        .IsRequired()
                         .HasColumnType("text");
-
-                    b.HasIndex("DepartmentId");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("AspNetUsers", t =>
-                        {
-                            t.Property("RoomId")
-                                .HasColumnName("Student_RoomId");
-                        });
 
                     b.HasDiscriminator().HasValue("Student");
                 });
 
-            modelBuilder.Entity("Api.Domain.Models.Community", b =>
+            modelBuilder.Entity("Api.Domain.Models.Identity.User", b =>
                 {
                     b.HasOne("Api.Domain.Models.Department", "Department")
-                        .WithMany("Communities")
+                        .WithMany("Users")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -449,48 +420,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("Api.Domain.Models.Course", b =>
-                {
-                    b.HasOne("Api.Domain.Models.Department", "Department")
-                        .WithMany("Courses")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Api.Domain.Models.Instructor", "Instructor")
-                        .WithMany("Courses")
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Department");
-
-                    b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("Api.Domain.Models.Event", b =>
-                {
-                    b.HasOne("Api.Domain.Models.Identity.User", "User")
-                        .WithMany("Events")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Api.Domain.Models.Room", b =>
-                {
-                    b.HasOne("Api.Domain.Models.Community", "Community")
-                        .WithMany("Rooms")
-                        .HasForeignKey("CommunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Community");
-                });
-
-            modelBuilder.Entity("CommunityInstructor", b =>
+            modelBuilder.Entity("CommunityUser", b =>
                 {
                     b.HasOne("Api.Domain.Models.Community", null)
                         .WithMany()
@@ -498,24 +428,9 @@ namespace Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Domain.Models.Instructor", null)
+                    b.HasOne("Api.Domain.Models.Identity.User", null)
                         .WithMany()
-                        .HasForeignKey("InstructorsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("CommunityStudent", b =>
-                {
-                    b.HasOne("Api.Domain.Models.Community", null)
-                        .WithMany()
-                        .HasForeignKey("CommunitiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Api.Domain.Models.Student", null)
-                        .WithMany()
-                        .HasForeignKey("StudentsId")
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -586,34 +501,76 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Api.Domain.Models.Instructor", b =>
+            modelBuilder.Entity("RoomUser", b =>
                 {
-                    b.HasOne("Api.Domain.Models.Department", "Department")
-                        .WithMany("Instructors")
-                        .HasForeignKey("DepartmentId")
+                    b.HasOne("Api.Domain.Models.Room", null)
+                        .WithMany()
+                        .HasForeignKey("RoomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Domain.Models.Room", null)
-                        .WithMany("Instructors")
-                        .HasForeignKey("RoomId");
+                    b.HasOne("Api.Domain.Models.Identity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Community", b =>
+                {
+                    b.HasOne("Api.Domain.Models.Department", "Department")
+                        .WithMany("Communities")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("Api.Domain.Models.Student", b =>
+            modelBuilder.Entity("Api.Domain.Models.Course", b =>
                 {
                     b.HasOne("Api.Domain.Models.Department", "Department")
-                        .WithMany("Students")
+                        .WithMany("Courses")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Api.Domain.Models.Room", null)
-                        .WithMany("Students")
-                        .HasForeignKey("RoomId");
+                    b.HasOne("Api.Domain.Models.Instructor", "Instructor")
+                        .WithMany("Courses")
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
+
+                    b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Event", b =>
+                {
+                    b.HasOne("Api.Domain.Models.Identity.User", "User")
+                        .WithMany("Events")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Room", b =>
+                {
+                    b.HasOne("Api.Domain.Models.Community", "Community")
+                        .WithMany("Rooms")
+                        .HasForeignKey("CommunityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Community");
+                });
+
+            modelBuilder.Entity("Api.Domain.Models.Identity.User", b =>
+                {
+                    b.Navigation("Events");
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Community", b =>
@@ -627,21 +584,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Navigation("Courses");
 
-                    b.Navigation("Instructors");
-
-                    b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("Api.Domain.Models.Identity.User", b =>
-                {
-                    b.Navigation("Events");
-                });
-
-            modelBuilder.Entity("Api.Domain.Models.Room", b =>
-                {
-                    b.Navigation("Instructors");
-
-                    b.Navigation("Students");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Instructor", b =>

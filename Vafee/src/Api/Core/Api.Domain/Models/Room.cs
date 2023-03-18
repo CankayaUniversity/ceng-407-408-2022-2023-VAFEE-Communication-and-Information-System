@@ -11,8 +11,10 @@ namespace Api.Domain.Models
     {
         public string Description { get; set; }
 
-        public List<Student> Students { get; set; }
-        public List<Instructor> Instructors { get; set; }
+
+        public List<User> Users { get; set; }
+        //public List<Student> Students { get; set; }
+        //public List<Instructor> Instructors { get; set; }
 
         //todo mesajlar ve mesaj türleri (nereye gideceğini de çöz)
 

@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace Api.Domain.Models
 {
-    public class Student:User
+    public class Student : User
     {
-        
+        public string Number { get; set; }
 
-        public List<Community> Communities { get; set; }
-        public List<Course> Courses { get; set; }
+        
     }
 }

@@ -10,9 +10,9 @@ namespace Api.Domain.Models
     public class Community : BaseEntity
     {
         public List<Room> Rooms { get; set; }
-        //public List<User> Users { get; set; }
-        public List<Student> Students { get; set; }
-        public List<Instructor> Instructors { get; set; }
+        public List<User> Users { get; set; }
+        //public List<Student> Students { get; set; }
+        //public List<Instructor> Instructors { get; set; }
 
         public string DepartmentId { get; set; }
         public Department Department { get; set; }

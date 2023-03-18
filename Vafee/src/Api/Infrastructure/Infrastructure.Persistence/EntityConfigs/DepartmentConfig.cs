@@ -1,6 +1,8 @@
 ﻿using Api.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +15,8 @@ namespace Infrastructure.Persistence.EntityConfigs
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
+            
+
             builder
                 .HasMany(x => x.Communities)
                 .WithOne(x => x.Department)
@@ -24,15 +28,11 @@ namespace Infrastructure.Persistence.EntityConfigs
                 .HasForeignKey(x => x.DepartmentId);
 
             builder
-                .HasMany(x => x.Instructors)
-                .WithOne(i => i.Department)
-                .HasForeignKey(i => i.DepartmentId);
-
-
-            builder
-                .HasMany(d => d.Students)
-                .WithOne(s => s.Department)
-                .HasForeignKey(s => s.DepartmentId);
+                .HasMany(d => d.Users)
+                .WithOne(u => u.Department)
+                .HasForeignKey(u => u.DepartmentId);
         }
     }
+
+    
 }

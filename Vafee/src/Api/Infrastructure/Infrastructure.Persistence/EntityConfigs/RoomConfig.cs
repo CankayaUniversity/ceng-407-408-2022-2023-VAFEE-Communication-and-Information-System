@@ -13,8 +13,9 @@ namespace Infrastructure.Persistence.EntityConfigs
     {
         public void Configure(EntityTypeBuilder<Room> builder)
         {
-            builder.HasMany(r => r.Students);
-            builder.HasMany(r => r.Instructors);
+            builder
+                .HasMany(r => r.Users)
+                .WithMany(u => u.Rooms);
 
             builder
                 .HasOne(r => r.Community)
