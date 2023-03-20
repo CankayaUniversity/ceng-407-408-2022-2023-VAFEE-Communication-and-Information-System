@@ -5,6 +5,18 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
 
+
+// todo 1) Jwt Authentication ekle. (program.cs içerisinde eklendi, servislerde eklenmesi gerekiyor) (esat)
+// todo 2) Resimleri azure'da saklamak için servisleri ekle. 
+// todo 3) Kullanýcý Profil Yönetimi. (esat)
+// todo 4) Mesajlar dbde tutulma þekli.
+// todo 5) Repository pattern ya da özel servisler
+
+
+
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 var trustedClientAddresses = new string[] { "", "" };
 
@@ -13,7 +25,6 @@ var trustedClientAddresses = new string[] { "", "" };
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-
 });
 
 
