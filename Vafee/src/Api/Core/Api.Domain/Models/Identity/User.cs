@@ -12,6 +12,7 @@ namespace Api.Domain.Models.Identity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string FullName => FirstName + LastName;
 
         public string? DepartmentId { get; set; }
         public Department Department { get; set; }

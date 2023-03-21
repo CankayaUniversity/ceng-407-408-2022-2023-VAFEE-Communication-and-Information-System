@@ -13,6 +13,10 @@ using System.Text.Json.Serialization;
 // todo 5) Repository pattern ya da özel servisler
 
 
+// Ekstralar =>
+// Response classlarý => uygun hata mesajlarý döndürmek için özel classlar (feyyaz)
+
+
 
 
 
@@ -57,6 +61,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
+        ClockSkew = TimeSpan.Zero,
 
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],

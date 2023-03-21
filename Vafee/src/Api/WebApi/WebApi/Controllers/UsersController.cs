@@ -9,6 +9,7 @@ using Api.Domain.Models.Identity;
 using Infrastructure.Persistence.Context;
 using Api.Application.DTO.Create;
 using Api.Domain.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {

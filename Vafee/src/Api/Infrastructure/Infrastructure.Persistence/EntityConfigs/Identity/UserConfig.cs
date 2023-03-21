@@ -22,6 +22,8 @@ namespace Infrastructure.Persistence.EntityConfigs.Identity
             builder.Property(u => u.UserName).HasValueGenerator<UserNameGenerator>();
             builder.Property(u => u.Email).HasValueGenerator<UserEmailGenerator>();
 
+            builder.Ignore(u => u.FullName);
+
             builder
                 .HasDiscriminator<string>("UserType")
                 .HasValue<Student>("Student")
@@ -65,7 +67,7 @@ namespace Infrastructure.Persistence.EntityConfigs.Identity
             var result = entry switch
             {
                 
-                _ => ""
+                _ => "BALCIIIII ==>|**|<== " + Guid.NewGuid().ToString()
             };
 
 

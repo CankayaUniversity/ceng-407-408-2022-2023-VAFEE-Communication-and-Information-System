@@ -118,8 +118,7 @@ namespace WebApi.Controllers
 
             if (result.Succeeded)
             {
-                
-                // Rollere ekleme yapılabilir
+                //todo Öğrenciyi uygun role/rollere ekle
             }
 
 

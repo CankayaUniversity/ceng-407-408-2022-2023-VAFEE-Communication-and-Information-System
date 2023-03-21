@@ -162,7 +162,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("CommunityUser");
+                    b.ToTable("CommunityUser", (string)null);
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
@@ -177,7 +177,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StudentsId");
 
-                    b.ToTable("CourseStudent");
+                    b.ToTable("CourseStudent", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -298,7 +298,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("RoomUser");
+                    b.ToTable("RoomUser", (string)null);
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Community", b =>
@@ -311,7 +311,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Communities");
+                    b.ToTable("Communities", (string)null);
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Course", b =>
@@ -338,14 +338,14 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Department", b =>
                 {
                     b.HasBaseType("Api.Domain.Models.BaseEntity");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Event", b =>
@@ -368,7 +368,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Events");
+                    b.ToTable("Events", (string)null);
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Room", b =>
@@ -385,7 +385,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("CommunityId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Instructor", b =>
