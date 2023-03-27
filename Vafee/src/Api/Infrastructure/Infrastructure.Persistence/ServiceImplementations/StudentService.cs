@@ -8,16 +8,21 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Api.Application.DTO.Get;
+using Mapster;
+using MapsterMapper;
 
 namespace Infrastructure.Persistence.ServiceImplementations
 {
     public class StudentService : IStudentService
     {
         private readonly VafeeContext _context;
+        private readonly IMapper _mapper;
 
-        public StudentService(VafeeContext context)
+        public StudentService(VafeeContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public Task<IQueryable<Student>> GetAllStudentsWhereAsync(Expression<Func<Student, bool>> expression)
@@ -30,14 +35,15 @@ namespace Infrastructure.Persistence.ServiceImplementations
             throw new NotImplementedException();
         }
 
-        public IQueryable<Student> GetAllStudentsWithoutImages()
+        public IQueryable<GetStudentDto> GetAllStudentsWithoutImages()
         {
-            return _context.Students.AsNoTrackingWithIdentityResolution();
+            return _context.Students.Adapt<IQueryable<GetStudentDto>>();
         }
 
-        public Task<Student> GetStudentByIdAsync(string studentId)
+        public async Task<GetStudentDto> GetStudentByIdAsync(string studentId)
         {
-            throw new NotImplementedException();
+            var record = await _context.Students.FindAsync(studentId);
+            return record.Adapt<GetStudentDto>();
         }
 
         public Task<Student> GetStudentWithoutImageByIdAsync(string studentId)
@@ -46,6 +52,21 @@ namespace Infrastructure.Persistence.ServiceImplementations
         }
 
         public Task<bool> RemoveAllStudentsWhereAsync(Expression<Func<Student, bool>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> AddStudentAsync(Student student)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> AddStudentsAsync(IEnumerable<Student> students)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> AddStudentWithImageAsync(Student student)
         {
             throw new NotImplementedException();
         }

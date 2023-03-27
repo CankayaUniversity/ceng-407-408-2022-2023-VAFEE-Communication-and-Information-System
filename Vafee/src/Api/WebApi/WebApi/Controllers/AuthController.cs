@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Api.Domain.Models;
 
 namespace WebApi.Controllers
 {
@@ -31,7 +32,6 @@ namespace WebApi.Controllers
         [Route("Login")]
         public async Task<IActionResult> Login([FromForm] LoginUserDto loginUserDto)
         {
-
             var user = loginUserDto switch
             {
                 { Email: null } => await _userManager.FindByNameAsync(loginUserDto.Username),
@@ -65,12 +65,33 @@ namespace WebApi.Controllers
             return Ok(token);
         }
 
-        //[HttpPost]
-        //[Route("Register")]
-        //public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
-        //{
-
-        //}
+        // [HttpPost]
+        // [Route("Register")]
+        // public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
+        // {
+        //     // aynı kullanıcı isminde veya emailde başka biri var mı
+        //     // todo username ve email için ayrı ayrı hata mesajları yazılacak
+        //     var userEmailExists = await _userManager.FindByEmailAsync(registerUserDto.Email);
+        //     var userNameExists = await _userManager.FindByNameAsync(registerUserDto.Username);
+        //
+        //
+        //     if (userEmailExists != null || userNameExists != null)
+        //     {
+        //         return BadRequest("User already exists.");
+        //     }
+        //
+        //
+        //     // todo Kullanıcı yok, oluştur, mapping daha sonra mapster ile yapılacak
+        //     var student = new Student()
+        //     {
+        //         Email = registerUserDto.Email,
+        //         FirstName = registerUserDto.FirstName,
+        //         LastName = registerUserDto.Email,
+        //         
+        //     };
+        //
+        //     return Ok();
+        // }
 
         private async Task<IEnumerable<Claim>> GetUserClaims(User user)
         {
@@ -82,17 +103,13 @@ namespace WebApi.Controllers
 
             var claims = new List<Claim>()
             {
-
-                new Claim(JwtRegisteredClaimNames.Email,user.Email),
-                new Claim("FullName",user.FullName),
-                new Claim("UserId",user.Id)
-
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim("FullName", user.FullName),
+                new Claim("UserId", user.Id)
             }.Union(userClaims).Union(roleClaims);
 
 
-
             return claims;
-
         }
 
         private string GenerateAccessToken(IEnumerable<Claim> claims)
@@ -114,9 +131,20 @@ namespace WebApi.Controllers
 
         private string GenerateRefreshToken()
         {
-
-            return "";
+            return Guid.NewGuid().ToString();
         }
+    }
+
+    public class RegisterUserDto
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public string Email { get; set; }
+        public string Username { get; set; }
+
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 
     public class LoginUserDto

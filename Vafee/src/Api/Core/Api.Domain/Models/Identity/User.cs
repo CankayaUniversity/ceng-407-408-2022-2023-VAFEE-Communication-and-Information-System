@@ -13,7 +13,10 @@ namespace Api.Domain.Models.Identity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName => FirstName + LastName;
+        public string Image { get; set; }
 
+        public string IsOnline { get; set; }
+        
         public string? DepartmentId { get; set; }
         public Department Department { get; set; }
 

@@ -25,10 +25,11 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Department>>> GetDepartments()
         {
-          if (_context.Departments == null)
-          {
-              return NotFound();
-          }
+            if (_context.Departments == null)
+            {
+                return NotFound();
+            }
+
             return await _context.Departments.ToListAsync();
         }
 
@@ -36,10 +37,11 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Department>> GetDepartment(string id)
         {
-          if (_context.Departments == null)
-          {
-              return NotFound();
-          }
+            if (_context.Departments == null)
+            {
+                return NotFound();
+            }
+
             var department = await _context.Departments.FindAsync(id);
 
             if (department == null)
@@ -86,10 +88,11 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Department>> PostDepartment(Department department)
         {
-          if (_context.Departments == null)
-          {
-              return Problem("Entity set 'VafeeContext.Departments'  is null.");
-          }
+            if (_context.Departments == null)
+            {
+                return Problem("Entity set 'VafeeContext.Departments'  is null.");
+            }
+
             _context.Departments.Add(department);
             await _context.SaveChangesAsync();
 
@@ -104,6 +107,7 @@ namespace WebApi.Controllers
             {
                 return NotFound();
             }
+
             var department = await _context.Departments.FindAsync(id);
             if (department == null)
             {

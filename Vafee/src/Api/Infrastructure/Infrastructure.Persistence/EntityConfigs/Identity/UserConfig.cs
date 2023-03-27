@@ -18,6 +18,9 @@ namespace Infrastructure.Persistence.EntityConfigs.Identity
         public void Configure(EntityTypeBuilder<User> builder)
         {
 
+            builder.HasIndex(u => u.Email).IsUnique();
+            builder.HasIndex(u => u.UserName);
+            
             builder.Property(u => u.Id).HasValueGenerator<UserIdGenerator>();
             builder.Property(u => u.UserName).HasValueGenerator<UserNameGenerator>();
             builder.Property(u => u.Email).HasValueGenerator<UserEmailGenerator>();

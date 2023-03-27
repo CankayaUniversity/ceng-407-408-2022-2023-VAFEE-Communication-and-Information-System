@@ -11,6 +11,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Api.Application.Mapper;
+using Mapster;
+using MapsterMapper;
 
 namespace Infrastructure.Persistence
 {
@@ -60,8 +63,10 @@ namespace Infrastructure.Persistence
                 .AddEntityFrameworkStores<VafeeContext>();
 
 
-            services.AddScoped<IStudentService, StudentService>();
 
+            
+            services.AddScoped<IStudentService, StudentService>();
+            
         }
     }
 }

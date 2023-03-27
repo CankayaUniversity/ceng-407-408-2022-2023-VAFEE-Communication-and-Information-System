@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Api.Domain.Models;
 using Infrastructure.Persistence.Context;
 using Api.Application.DTO.Create;
+using Api.Application.DTO.Get;
+using Api.Application.Services;
 using Microsoft.AspNetCore.Identity;
 using Api.Domain.Models.Identity;
 using MapsterMapper;
@@ -21,48 +23,31 @@ namespace WebApi.Controllers
     {
         private readonly VafeeContext _context;
         private readonly UserManager<User> _userManager;
+        private readonly IStudentService _studentService;
 
-        public StudentsController(VafeeContext context, UserManager<User> userManager)
+        public StudentsController(VafeeContext context, UserManager<User> userManager,IStudentService studentService)
         {
+            
             _context = context;
             _userManager = userManager;
+            _studentService = studentService;
         }
 
         // GET: api/Students
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Student>>> GetStudents()
+        public async Task<ActionResult<IEnumerable<GetStudentDto>>> GetStudents()
         {
-            if (_context.Students == null)
-            {
-                return NotFound();
-            }
-            return await _context.Students.ToListAsync();
+            return await _studentService.GetAllStudentsWithoutImages().ToListAsync();
         }
 
         // GET: api/Students/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Student>> GetStudent(string id)
+        public async Task<ActionResult<GetStudentDto>> GetStudent(string id)
         {
-            if (_context.Students == null)
-            {
-                return NotFound();
-            }
-            var student = await _context.Students.FindAsync(id);
-
-            
-
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            
-
-            return student;
+            return await _studentService.GetStudentByIdAsync(id);
         }
-
-        // PUT: api/Students/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStudent(string id, Student student)
         {

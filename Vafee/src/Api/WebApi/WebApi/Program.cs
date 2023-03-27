@@ -4,17 +4,18 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
+using WebApi.Hubs;
 
 
-// todo 1) Jwt Authentication ekle. (program.cs içerisinde eklendi, servislerde eklenmesi gerekiyor) (esat)
-// todo 2) Resimleri azure'da saklamak için servisleri ekle. 
-// todo 3) Kullanýcý Profil Yönetimi. (esat)
-// todo 4) Mesajlar dbde tutulma þekli.
-// todo 5) Repository pattern ya da özel servisler
+// todo 1) Jwt Authentication ekle. (program.cs iï¿½erisinde eklendi, servislerde eklenmesi gerekiyor) (esat)
+// todo 2) Resimleri azure'da saklamak iï¿½in servisleri ekle. 
+// todo 3) Kullanï¿½cï¿½ Profil Yï¿½netimi. (esat)
+// todo 4) Mesajlar dbde tutulma ï¿½ekli.
+// todo 5) Repository pattern ya da ï¿½zel servisler
 
 
 // Ekstralar =>
-// Response classlarý => uygun hata mesajlarý döndürmek için özel classlar (feyyaz)
+// Response classlarï¿½ => uygun hata mesajlarï¿½ dï¿½ndï¿½rmek iï¿½in ï¿½zel classlar (feyyaz)
 
 
 
@@ -37,12 +38,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-// Db, authentication*, signalr*, (usermanager, rolemanager, signinmanager), vue ve flutter uygulamasý için cors*,mapper (mapster)
-// * olanlarýn ayarlarý yapýldýktan sonra uygun yerlere ekle. (app.UseCors() ...)
+// Db, authentication*, signalr*, (usermanager, rolemanager, signinmanager), vue ve flutter uygulamasï¿½ iï¿½in cors*,mapper (mapster)
+// * olanlarï¿½n ayarlarï¿½ yapï¿½ldï¿½ktan sonra uygun yerlere ekle. (app.UseCors() ...)
 
 builder.Services.RegisterInfrastructureServices(); // Db, (usermanager, rolemanager, signinmanager)
 builder.Services.RegisterApplicationServices(); // mapper
 
+
+builder.Services.AddSignalR(options =>
+{
+    options.EnableDetailedErrors = true;
+});
 
 
 builder.Services.AddAuthentication(options =>
@@ -54,8 +60,8 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new()
     {
-        //todo Jwt validation ayarlarýný burada yap.
-        // Jwt'nin geçerli olup olmadýðý kontrol edilirken hangi kurallara bakýlacaðýný burada belirle
+        //todo Jwt validation ayarlarï¿½nï¿½ burada yap.
+        // Jwt'nin geï¿½erli olup olmadï¿½ï¿½ï¿½ kontrol edilirken hangi kurallara bakï¿½lacaï¿½ï¿½nï¿½ burada belirle
 
         ValidateIssuer = true,
         ValidateAudience = true,
@@ -75,7 +81,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddCors(x => x.AddPolicy("TrustedClients", p =>
 {
-    p.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins(trustedClientAddresses);
+    p.AllowAnyMethod().AllowAnyHeader().AllowCredentials().WithOrigins("http://localhost:5173");
 }));
 
 
@@ -90,8 +96,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-//app.UseCors("TrustedClients");
+app.UseCors("TrustedClients");
 //app.UseAuthentication();
+app.MapHub<UsersHub>("/Hubs/UsersHub");
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

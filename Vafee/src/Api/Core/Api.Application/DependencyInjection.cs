@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,51 +22,27 @@ namespace Api.Application
     {
         public static void RegisterApplicationServices(this IServiceCollection services)
         {
-            // todo Mapster konfigürasyonunu yap
-            //services.AddSingleton(GetConfiguredMappingConfig());
-            //services.AddScoped<IMapper, ServiceMapper>();
+            // todo Mapster konfigürasyonunu yap (+)
+            services.AddMapster();
+            
 
             // todo uygun projeye server-side validation eklenmeli
             // server-side validationların karşılıkları da client tarafına eklenmeli
 
-
-
             
+
+
         }
 
 
-        private static TypeAdapterConfig GetConfiguredMappingConfig()
+        private static IServiceCollection AddMapster(this IServiceCollection services)
         {
+            var config = TypeAdapterConfig.GlobalSettings;
+            config.Scan(Assembly.GetExecutingAssembly());
 
-            var config = new TypeAdapterConfig
-            {
-
-            };
-
-
-
-
-            //config.NewConfig<Student, EnrollmentDto>()
-            //    .AfterMappingAsync(async dto =>
-            //    {
-            //        var context = MapContext.Current.GetService<SchoolContext>();
-            //        var course = await context.Courses.FindAsync(dto.CourseID);
-            //        if (course != null)
-            //            dto.CourseTitle = course.Title;
-            //        var student = await context.Students.FindAsync(dto.StudentID);
-            //        if (student != null)
-            //            dto.StudentName = MapContext.Current.GetService<NameFormatter>().Format(student.FirstMidName, student.LastName);
-            //    });
-            //config.NewConfig<Student, GetStudentDto>()
-            //    .Map(dest => dest.Name, src => MapContext.Current.GetService<NameFormatter>().Format(src.FirstMidName, src.LastName));
-
-            config.NewConfig<Student, GetStudentDto>()
-                .Map(dest => dest.Email, src => src.Email)
-                .Map(dest => dest.FirstName, src => src.FirstName)
-                .Map(dest => dest.LastName, src => src.LastName)
-                .Map(dest => dest.UserName, src => src.UserName);
-
-            return config;
+            services.AddSingleton(config);
+            services.AddScoped<IMapper, ServiceMapper>();
+            return services;
         }
     }
 }

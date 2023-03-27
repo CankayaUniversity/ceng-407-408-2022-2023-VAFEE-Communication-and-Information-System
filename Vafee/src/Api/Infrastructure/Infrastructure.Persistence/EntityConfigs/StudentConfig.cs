@@ -21,8 +21,10 @@ namespace Infrastructure.Persistence.EntityConfigs
                 .WithMany(c => c.Students);
 
             //builder.HasIndex(s => s.RollNumber).IsUnique();
-            builder.Property(s => s.Number).HasValueGenerator<StudentNumberGenerator>();
+            builder.Property(s => s.RollNumber).HasValueGenerator<StudentNumberGenerator>();
             builder.Property(s => s.Email).HasValueGenerator<StudentEmailGenerator>();
+            
+            
             
         }
     }

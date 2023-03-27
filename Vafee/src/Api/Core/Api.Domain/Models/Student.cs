@@ -9,7 +9,7 @@ namespace Api.Domain.Models
 {
     public class Student : User
     {
-        public string Number { get; set; }
+        public string RollNumber { get; set; }
 
         
     }

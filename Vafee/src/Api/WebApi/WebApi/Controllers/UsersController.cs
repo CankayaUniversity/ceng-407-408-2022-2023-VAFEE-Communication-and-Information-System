@@ -39,6 +39,24 @@ namespace WebApi.Controllers
             return await _context.Users.ToListAsync();
         }
 
+        
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("AddStudent")]
+        public async Task<IActionResult> AddStudent()
+        {
+            return Ok();
+        }
+
+        
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("AddInstructor")]
+        public async Task<IActionResult> AddInstructor()
+        {
+            return Ok();
+        }
+
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(string id)
