@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Api.Application.DTO.Create;
 using Api.Application.DTO.Get;
 using Mapster;
 using MapsterMapper;
@@ -25,60 +26,61 @@ namespace Infrastructure.Persistence.ServiceImplementations
             _mapper = mapper;
         }
 
-        public Task<IQueryable<Student>> GetAllStudentsWhereAsync(Expression<Func<Student, bool>> expression)
+        public IQueryable<GetStudentDto> GetAllStudents()
+        {
+            return _context.Students.AsNoTrackingWithIdentityResolution().Adapt<IQueryable<GetStudentDto>>();
+        }
+
+        public Task<IQueryable<GetStudentDto>> GetAllStudentsWhereAsync(Expression<Func<Student, bool>> expression)
         {
             throw new NotImplementedException();
         }
 
-        public Task<IQueryable<Student>> GetAllStudentsWithImagesAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IQueryable<GetStudentDto> GetAllStudentsWithoutImages()
-        {
-            return _context.Students.Adapt<IQueryable<GetStudentDto>>();
-        }
 
         public async Task<GetStudentDto> GetStudentByIdAsync(string studentId)
         {
             var record = await _context.Students.FindAsync(studentId);
-            return record.Adapt<GetStudentDto>();
+            return record?.Adapt<GetStudentDto>();
         }
 
-        public Task<Student> GetStudentWithoutImageByIdAsync(string studentId)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<bool> RemoveAllStudentsWhereAsync(Expression<Func<Student, bool>> expression)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> AddStudentAsync(Student student)
+        public async Task<bool> AddStudentAsync(CreateStudentDto student)
         {
-            throw new NotImplementedException();
+            var record = student.Adapt<Student>();
+            await _context.Students.AddAsync(record);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> AddStudentsAsync(IEnumerable<Student> students)
+        public async Task<bool> AddStudentsAsync(IEnumerable<CreateStudentDto> students)
         {
-            throw new NotImplementedException();
+            var records = students.Adapt<IEnumerable<Student>>();
+            await _context.Students.AddRangeAsync(records);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> AddStudentWithImageAsync(Student student)
+
+        public async Task<bool> RemoveStudentAsync(string studentId)
         {
-            throw new NotImplementedException();
+            var studentToDelete = await _context.Students.FindAsync(studentId);
+
+            if (studentToDelete == null)
+            {
+                return false;
+            }
+
+            _context.Students.Remove(studentToDelete);
+            return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<bool> RemoveStudentAsync(string studentId)
+        public async Task<bool> RemoveStudentAsync(Student student)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> RemoveStudentAsync(Student student)
-        {
-            throw new NotImplementedException();
+            _context.Students.Remove(student);
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

@@ -20,8 +20,6 @@ using WebApi.Hubs;
 
 
 
-
-
 var builder = WebApplication.CreateBuilder(args);
 var trustedClientAddresses = new string[] { "", "" };
 

@@ -37,7 +37,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetStudentDto>>> GetStudents()
         {
-            return await _studentService.GetAllStudentsWithoutImages().ToListAsync();
+            return Ok();
         }
 
         // GET: api/Students/5

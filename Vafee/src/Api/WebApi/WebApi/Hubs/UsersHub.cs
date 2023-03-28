@@ -18,7 +18,9 @@ public class UsersHub : Hub
     public override Task OnConnectedAsync()
     {
         var connectionId = Context.ConnectionId;
-        var userId = Context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userId = Context.User.Identity;
+
+        // _onlineUsers.Add(userId, connectionId);
 
         // var userId = Context.User.FindFirst(ClaimTypes.NameIdentifier).Value;
         return base.OnConnectedAsync();

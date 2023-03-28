@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Context
@@ -69,9 +71,25 @@ namespace Infrastructure.Persistence.Context
             builder.ApplyConfiguration(new RoleConfig());
 
 
-
+            
         }
 
+
+
+        private async Task PopulateDbContext(this ModelBuilder builder)
+        {
+            string initDbFileName = "initDb.json";
+            string jsonStirng = File.ReadAllText(initDbFileName);
+            using FileStream openStream = File.OpenRead(initDbFileName);
+
+            var initialDepartments = await JsonSerializer.DeserializeAsync<IEnumerable<Department>>(openStream);
+            var initialStudents = await JsonSerializer.DeserializeAsync<IEnumerable<Student>>(openStream);
+            var initialCourses = await JsonSerializer.DeserializeAsync<IEnumerable<Course>>(openStream);
+            var initialInstructors = await JsonSerializer.DeserializeAsync<IEnumerable<Instructor>>(openStream);
+            
+
+            
+        }
 
 
         public DbSet<Community> Communities { get; set; }

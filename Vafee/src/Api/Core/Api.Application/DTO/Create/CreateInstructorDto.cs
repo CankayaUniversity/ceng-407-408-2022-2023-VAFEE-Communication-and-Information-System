@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Api.Application.DTO.Create
 {
-    internal class CreateInstructorDto
+    public class CreateInstructorDto
     {
     }
 }
