@@ -10,6 +10,8 @@ using Infrastructure.Persistence.Context;
 using Api.Application.DTO.Create;
 using Api.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using MapsterMapper;
 
 namespace WebApi.Controllers
 {
@@ -21,10 +23,12 @@ namespace WebApi.Controllers
         // Ya da kullanıcı silme işlemleri de bu controller ile yapılabilir
         // üçüncü olarak bu controller, admin kullanıcıları için userların tüm bilgilerini dönderecek şekilde kullanılabilir
         private readonly VafeeContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public UsersController(VafeeContext context)
+        public UsersController(VafeeContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/Users
@@ -39,16 +43,33 @@ namespace WebApi.Controllers
             return await _context.Users.ToListAsync();
         }
 
-        
+
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [Route("AddStudent")]
         public async Task<IActionResult> AddStudent()
         {
+            var count = await _context.Students.CountAsync();
+            var user = new Student()
+            {
+                FirstName = "Esat",
+                LastName = "Namli",
+                Email = $"xyz{count}@xyz.com",
+                UserName = $"xyz{count}@xyz",
+                Department = new Department()
+                {
+                    Name = "CENG111",
+                }
+            };
+
+
+            var result = await _userManager.CreateAsync(user, "Esat123.");
+
+
             return Ok();
         }
 
-        
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         [Route("AddInstructor")]

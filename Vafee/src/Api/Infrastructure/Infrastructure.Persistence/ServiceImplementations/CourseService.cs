@@ -73,4 +73,9 @@ public class CourseService : ICourseService
         _context.Courses.Remove(course);
         return await _context.SaveChangesAsync() > 0;
     }
+
+    public Task<bool> UpdateCourseAsync(string courseId, CreateCourseDto courseDto)
+    {
+        throw new NotImplementedException();
+    }
 }

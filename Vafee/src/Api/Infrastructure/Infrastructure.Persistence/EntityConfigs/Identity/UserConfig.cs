@@ -25,6 +25,7 @@ namespace Infrastructure.Persistence.EntityConfigs.Identity
             builder.Property(u => u.UserName).HasValueGenerator<UserNameGenerator>();
             builder.Property(u => u.Email).HasValueGenerator<UserEmailGenerator>();
 
+            builder.Ignore(u => u.IsOnline);
             builder.Ignore(u => u.FullName);
 
             builder

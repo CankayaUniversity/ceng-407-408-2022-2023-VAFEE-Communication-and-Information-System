@@ -9,6 +9,7 @@ using Api.Domain.Models;
 using Infrastructure.Persistence.Context;
 using Api.Application.DTO.Create;
 using Api.Application.DTO.Get;
+using Api.Application.DTO.Responses;
 using Api.Application.Services;
 using Microsoft.AspNetCore.Identity;
 using Api.Domain.Models.Identity;
@@ -21,23 +22,19 @@ namespace WebApi.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly VafeeContext _context;
-        private readonly UserManager<User> _userManager;
         private readonly IStudentService _studentService;
 
-        public StudentsController(VafeeContext context, UserManager<User> userManager,IStudentService studentService)
+        public StudentsController(VafeeContext context, UserManager<User> userManager, IStudentService studentService)
         {
-            
-            _context = context;
-            _userManager = userManager;
             _studentService = studentService;
         }
 
         // GET: api/Students
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GetStudentDto>>> GetStudents()
+        [Route("GetStudents")]
+        public ActionResult<IEnumerable<GetStudentDto>> GetStudents()
         {
-            return Ok();
+            return Ok(_studentService.GetAllStudents());
         }
 
         // GET: api/Students/5
@@ -46,95 +43,47 @@ namespace WebApi.Controllers
         {
             return await _studentService.GetStudentByIdAsync(id);
         }
-        
-        
+
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudent(string id, Student student)
+        public async Task<IActionResult> PutStudent(string id,[FromForm] CreateStudentDto studentDto)
         {
-            if (id != student.Id)
+            var result = await _studentService.UpdateStudentAsync(id,studentDto);
+            if (result)
             {
-                return BadRequest();
+                return Ok();
             }
-
-            _context.Entry(student).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            
+            return BadRequest();
         }
-
-        // POST: api/Students
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        
         [HttpPost]
         public async Task<ActionResult<Student>> PostStudent(CreateStudentDto studentDto)
         {
-            if (_context.Students == null)
+            var result = await _studentService.AddStudentAsync(studentDto);
+            if (result)
             {
-                return Problem("Entity set 'VafeeContext.Students'  is null.");
+                return Ok();
             }
-
-            var student = new Student()
-            {
-                Email = studentDto.Email,
-                UserName = studentDto.UserName,
-                FirstName = studentDto.FirstName,
-                LastName = studentDto.LastName,
-                Department = new Department()
-                {
-                    Name = "CENG111"
-                }
-            };
-
-            var result = await _userManager.CreateAsync(student, studentDto.Password);
-
-            if (result.Succeeded)
-            {
-                //todo Öğrenciyi uygun role/rollere ekle
-            }
-
-
-
-            return CreatedAtAction("PostStudent", new { id = student.Id }, student);
+            
+            return BadRequest();
         }
 
         // DELETE: api/Students/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudent(string id)
         {
-            if (_context.Students == null)
+            var result = await _studentService.RemoveStudentAsync(id);
+            
+            if (result)
             {
-                return NotFound();
+                return Ok();
             }
-
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            _context.Students.Remove(student);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            
+            return BadRequest();
+            
         }
 
-        private bool StudentExists(string id)
-        {
-            return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        
     }
 }

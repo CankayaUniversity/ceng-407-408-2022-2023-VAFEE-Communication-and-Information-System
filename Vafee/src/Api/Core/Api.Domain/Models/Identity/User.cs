@@ -13,16 +13,17 @@ namespace Api.Domain.Models.Identity
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName => FirstName + LastName;
-        public string Image { get; set; }
+        public string? Image { get; set; }
+
 
         public string IsOnline { get; set; }
         
-        public string? DepartmentId { get; set; }
+        public string DepartmentId { get; set; }
         public Department Department { get; set; }
 
-        public List<Course> Courses { get; set; }
-        public List<Community> Communities { get; set; }
-        public List<Room> Rooms { get; set; }
-        public List<Event> Events { get; set; }
+        public List<Course>? Courses { get; set; }
+        public List<Community>? Communities { get; set; }
+        public List<Room>? Rooms { get; set; }
+        public List<Event>? Events { get; set; }
     }
 }

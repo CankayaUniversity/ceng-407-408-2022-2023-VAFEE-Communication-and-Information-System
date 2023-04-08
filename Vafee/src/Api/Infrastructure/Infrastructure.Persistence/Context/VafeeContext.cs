@@ -1,5 +1,6 @@
 ﻿using Api.Domain.Models;
 using Api.Domain.Models.Identity;
+using Infrastructure.Persistence.DataSeed;
 using Infrastructure.Persistence.EntityConfigs;
 using Infrastructure.Persistence.EntityConfigs.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -48,7 +49,7 @@ namespace Infrastructure.Persistence.Context
         }
 
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override async void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
@@ -71,25 +72,20 @@ namespace Infrastructure.Persistence.Context
             builder.ApplyConfiguration(new RoleConfig());
 
 
-            
+
+            // Db'de veri yoksa initialize et.
+            bool isEmpty = true;
+
+            foreach (var entityType in Model.GetEntityTypes())
+            {
+                
+            }
+
+
+            builder.PopulateDbContext();
         }
 
 
-
-        private async Task PopulateDbContext(this ModelBuilder builder)
-        {
-            string initDbFileName = "initDb.json";
-            string jsonStirng = File.ReadAllText(initDbFileName);
-            using FileStream openStream = File.OpenRead(initDbFileName);
-
-            var initialDepartments = await JsonSerializer.DeserializeAsync<IEnumerable<Department>>(openStream);
-            var initialStudents = await JsonSerializer.DeserializeAsync<IEnumerable<Student>>(openStream);
-            var initialCourses = await JsonSerializer.DeserializeAsync<IEnumerable<Course>>(openStream);
-            var initialInstructors = await JsonSerializer.DeserializeAsync<IEnumerable<Instructor>>(openStream);
-            
-
-            
-        }
 
 
         public DbSet<Community> Communities { get; set; }

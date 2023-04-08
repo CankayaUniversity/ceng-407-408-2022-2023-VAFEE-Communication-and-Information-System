@@ -24,6 +24,9 @@ namespace Api.Application.Services
 
         Task<bool> AddStudentAsync(CreateStudentDto student);
         Task<bool> AddStudentsAsync(IEnumerable<CreateStudentDto> students);
+        
+        
+        Task<bool> UpdateStudentAsync(string studentId, CreateStudentDto studentDto);
 
     }
 }

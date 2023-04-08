@@ -91,6 +91,9 @@ namespace Infrastructure.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Image")
+                        .HasColumnType("text");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -136,12 +139,17 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
+
+                    b.HasIndex("UserName");
 
                     b.ToTable("AspNetUsers", (string)null);
 
@@ -162,7 +170,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("CommunityUser", (string)null);
+                    b.ToTable("CommunityUser");
                 });
 
             modelBuilder.Entity("CourseStudent", b =>
@@ -177,7 +185,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StudentsId");
 
-                    b.ToTable("CourseStudent", (string)null);
+                    b.ToTable("CourseStudent");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -298,7 +306,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UsersId");
 
-                    b.ToTable("RoomUser", (string)null);
+                    b.ToTable("RoomUser");
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Community", b =>
@@ -311,7 +319,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Communities", (string)null);
+                    b.ToTable("Communities");
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Course", b =>
@@ -338,14 +346,14 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Department", b =>
                 {
                     b.HasBaseType("Api.Domain.Models.BaseEntity");
 
-                    b.ToTable("Departments", (string)null);
+                    b.ToTable("Departments");
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Event", b =>
@@ -368,7 +376,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Events", (string)null);
+                    b.ToTable("Events");
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Room", b =>
@@ -385,7 +393,7 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("CommunityId");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("Api.Domain.Models.Instructor", b =>
@@ -399,7 +407,7 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasBaseType("Api.Domain.Models.Identity.User");
 
-                    b.Property<string>("Number")
+                    b.Property<string>("RollNumber")
                         .IsRequired()
                         .HasColumnType("text");
 

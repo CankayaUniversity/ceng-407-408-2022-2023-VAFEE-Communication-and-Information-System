@@ -10,8 +10,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Api.Application.DTO.Create;
 using Api.Application.DTO.Get;
+using Api.Domain.Models.Identity;
+using Infrastructure.Persistence.EntityConfigs;
 using Mapster;
 using MapsterMapper;
+using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Persistence.ServiceImplementations
 {
@@ -19,11 +22,13 @@ namespace Infrastructure.Persistence.ServiceImplementations
     {
         private readonly VafeeContext _context;
         private readonly IMapper _mapper;
+        private readonly UserManager<User> _userManager;
 
-        public StudentService(VafeeContext context, IMapper mapper)
+        public StudentService(VafeeContext context, IMapper mapper,UserManager<User> userManager)
         {
             _context = context;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public IQueryable<GetStudentDto> GetAllStudents()
@@ -52,14 +57,34 @@ namespace Infrastructure.Persistence.ServiceImplementations
         public async Task<bool> AddStudentAsync(CreateStudentDto student)
         {
             var record = student.Adapt<Student>();
-            await _context.Students.AddAsync(record);
-            return await _context.SaveChangesAsync() > 0;
+            var result = await _userManager.CreateAsync(record,student.Password);
+
+            if (result.Succeeded)
+            {
+                // Rollere ekleme yapılabilir.
+            }
+            
+            return result.Succeeded;
         }
 
         public async Task<bool> AddStudentsAsync(IEnumerable<CreateStudentDto> students)
         {
             var records = students.Adapt<IEnumerable<Student>>();
             await _context.Students.AddRangeAsync(records);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> UpdateStudentAsync(string studentId, CreateStudentDto studentDto)
+        {
+            var studentToUpdate = await _context.Students.FindAsync(studentId);
+
+            if (studentToUpdate == null)
+            {
+                return false;
+            }
+
+            studentToUpdate = studentDto.Adapt(studentToUpdate);
+            _context.Students.Update(studentToUpdate);
             return await _context.SaveChangesAsync() > 0;
         }
 

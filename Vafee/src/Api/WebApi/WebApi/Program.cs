@@ -25,6 +25,8 @@ var trustedClientAddresses = new string[] { "", "" };
 
 // Add services to the container.
 
+builder.Services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;

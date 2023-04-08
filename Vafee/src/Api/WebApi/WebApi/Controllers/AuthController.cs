@@ -30,7 +30,7 @@ namespace WebApi.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login([FromForm] LoginUserDto loginUserDto)
+        public async Task<IActionResult> Login(LoginUserDto loginUserDto)
         {
             var user = loginUserDto switch
             {
@@ -65,33 +65,33 @@ namespace WebApi.Controllers
             return Ok(token);
         }
 
-        // [HttpPost]
-        // [Route("Register")]
-        // public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
-        // {
-        //     // aynı kullanıcı isminde veya emailde başka biri var mı
-        //     // todo username ve email için ayrı ayrı hata mesajları yazılacak
-        //     var userEmailExists = await _userManager.FindByEmailAsync(registerUserDto.Email);
-        //     var userNameExists = await _userManager.FindByNameAsync(registerUserDto.Username);
-        //
-        //
-        //     if (userEmailExists != null || userNameExists != null)
-        //     {
-        //         return BadRequest("User already exists.");
-        //     }
-        //
-        //
-        //     // todo Kullanıcı yok, oluştur, mapping daha sonra mapster ile yapılacak
-        //     var student = new Student()
-        //     {
-        //         Email = registerUserDto.Email,
-        //         FirstName = registerUserDto.FirstName,
-        //         LastName = registerUserDto.Email,
-        //         
-        //     };
-        //
-        //     return Ok();
-        // }
+        //[HttpPost]
+        //[Route("Register")]
+        //public async Task<IActionResult> Register(RegisterUserDto registerUserDto)
+        //{
+        //    // aynı kullanıcı isminde veya emailde başka biri var mı
+        //    // todo username ve email için ayrı ayrı hata mesajları yazılacak
+        //    var userEmailExists = await _userManager.FindByEmailAsync(registerUserDto.Email);
+        //    var userNameExists = await _userManager.FindByNameAsync(registerUserDto.Username);
+
+
+        //    if (userEmailExists != null || userNameExists != null)
+        //    {
+        //        return BadRequest("User already exists.");
+        //    }
+
+
+        //    // todo Kullanıcı yok, oluştur, mapping daha sonra mapster ile yapılacak
+        //    var student = new Student()
+        //    {
+        //        Email = registerUserDto.Email,
+        //        FirstName = registerUserDto.FirstName,
+        //        LastName = registerUserDto.Email,
+
+        //    };
+
+        //    return Ok();
+        //}
 
         private async Task<IEnumerable<Claim>> GetUserClaims(User user)
         {
