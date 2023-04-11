@@ -2,5 +2,5 @@
 
 public class CreateRoomDto
 {
-    
+    public string Id { get; set; }
 }

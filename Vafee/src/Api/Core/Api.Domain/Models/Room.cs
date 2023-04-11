@@ -18,7 +18,7 @@ namespace Api.Domain.Models
 
         //todo mesajlar ve mesaj türleri (nereye gideceğini de çöz)
 
-        public string CommunityId { get; set; }
-        public Community Community { get; set; }
+        public string? CommunityId { get; set; }
+        public Community? Community { get; set; }
     }
 }

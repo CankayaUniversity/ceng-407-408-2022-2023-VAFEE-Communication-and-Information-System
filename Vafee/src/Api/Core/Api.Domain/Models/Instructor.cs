@@ -9,8 +9,6 @@ namespace Api.Domain.Models
 {
     public class Instructor : User
     {
-
-        
         
     }
 }

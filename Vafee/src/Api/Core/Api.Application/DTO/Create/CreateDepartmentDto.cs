@@ -8,6 +8,7 @@ namespace Api.Application.DTO.Create
 {
     public class CreateDepartmentDto
     {
+        public string? Id { get; set; }
         public string Name { get; set; }
     }
 }

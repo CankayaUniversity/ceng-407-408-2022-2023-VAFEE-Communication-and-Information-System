@@ -66,6 +66,10 @@ namespace Infrastructure.Persistence
 
             
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IInstructorService, InstructorService>();
+            services.AddScoped<ICommunityService, CommunityService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
 
 
         }

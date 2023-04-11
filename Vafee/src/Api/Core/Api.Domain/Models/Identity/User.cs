@@ -12,14 +12,16 @@ namespace Api.Domain.Models.Identity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        // todo string birleştirme işlemini daha performanslı bir şekilde yapmak için string builder kullanılabilir.
+        // az sayıda kayıt için önemli değil ama çok sayıda olursa performansı etkileyebilir.
         public string FullName => FirstName + LastName;
         public string? Image { get; set; }
 
 
         public string IsOnline { get; set; }
         
-        public string DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public string? DepartmentId { get; set; }
+        public Department? Department { get; set; }
 
         public List<Course>? Courses { get; set; }
         public List<Community>? Communities { get; set; }

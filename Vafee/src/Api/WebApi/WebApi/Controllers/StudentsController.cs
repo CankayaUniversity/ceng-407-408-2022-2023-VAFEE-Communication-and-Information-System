@@ -27,62 +27,92 @@ namespace WebApi.Controllers
         public StudentsController(IStudentService studentService)
         {
             _studentService = studentService;
+
         }
 
-        // GET: api/Students
+
         [HttpGet]
-        public ActionResult<IEnumerable<GetStudentDto>> GetStudents()
+        [Route("GetAll")]
+        public async Task<ActionResult<IEnumerable<GetStudentDto>>> GetStudents()
         {
-            return Ok(_studentService.GetAllStudents());
+            var result = await _studentService.GetAllAsync();
+
+            if (result.Success)
+            {
+                return Ok(result.Data.Adapt<IEnumerable<GetStudentDto>>());
+            }
+
+            return NotFound();
         }
 
-        // GET: api/Students/5
-        [HttpGet("{id}")]
+        [HttpGet]
+        [Route("GetById/{id}")]
         public async Task<ActionResult<GetStudentDto>> GetStudent(string id)
         {
-            return await _studentService.GetStudentByIdAsync(id);
-        }
-
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudent(string id,[FromForm] CreateStudentDto studentDto)
-        {
-            var result = await _studentService.UpdateStudentAsync(id,studentDto);
-            if (result)
+            var result = await _studentService.GetByIdAsync(id);
+            if (result.Success)
             {
-                return Ok();
+                return Ok(result.Data.Adapt<GetStudentDto>());
             }
-            
-            return BadRequest();
+
+            return NotFound();
         }
-        
+
+        [HttpPut]
+        [Route("Update/{id}")]
+        public async Task<IActionResult> UpdateStudent(string id, [FromForm] CreateStudentDto studentDto)
+        {
+            if (id != studentDto.Id)
+            {
+                return BadRequest();
+            }
+
+            var getResult = await _studentService.GetByIdAsync(id);
+            var originalRecord = getResult.Data;
+
+            if (originalRecord == null)
+            {
+                return NotFound();
+            }
+
+            studentDto.Adapt(originalRecord);
+            var result = await _studentService.UpdateAsync(originalRecord);
+
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+
+            return BadRequest(result.Message);
+        }
+
         [HttpPost]
-        public async Task<ActionResult<Student>> PostStudent(CreateStudentDto studentDto)
+        [Route("Create")]
+        public async Task<ActionResult<Student>> CreateStudent(CreateStudentDto studentDto)
         {
-            var result = await _studentService.AddStudentAsync(studentDto);
-            if (result)
+            var record = studentDto.Adapt<Student>();
+            var result = await _studentService.AddAsync(record);
+
+            if (result.Success)
             {
-                return Ok();
+                return Ok(result.Message);
             }
-            
-            return BadRequest();
+
+            return BadRequest(result.Message);
         }
 
-        // DELETE: api/Students/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteStudent(string id)
         {
-            var result = await _studentService.RemoveStudentAsync(id);
-            
-            if (result)
-            {
-                return Ok();
-            }
-            
-            return BadRequest();
-            
-        }
+            var result = await _studentService.DeleteAsync(id);
 
-        
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+
+            return BadRequest(result.Message);
+        }
     }
 }

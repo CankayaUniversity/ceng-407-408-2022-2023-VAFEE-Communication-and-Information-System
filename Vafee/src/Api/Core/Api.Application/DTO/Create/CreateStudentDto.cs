@@ -8,6 +8,8 @@ namespace Api.Application.DTO.Create
 {
     public class CreateStudentDto
     {
+        public string Id { get; set; }
+        
         public string FirstName { get; set; }
         public string LastName { get; set; }
 

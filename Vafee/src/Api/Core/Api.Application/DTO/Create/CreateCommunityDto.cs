@@ -2,5 +2,5 @@
 
 public class CreateCommunityDto
 {
-    
+    public string? Id { get; set; }
 }

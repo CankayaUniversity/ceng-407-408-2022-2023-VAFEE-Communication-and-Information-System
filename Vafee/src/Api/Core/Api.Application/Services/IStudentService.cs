@@ -10,23 +10,11 @@ using Api.Application.DTO.Get;
 
 namespace Api.Application.Services
 {
-    public interface IStudentService
+    public interface IStudentService : IBaseService<Student>
     {
-        // todo Öğrenci ile ilgili olan tüm işlemleri metot olarak ekle
-        
-        IQueryable<GetStudentDto> GetAllStudents();
-        Task<IQueryable<GetStudentDto>> GetAllStudentsWhereAsync(Expression<Func<Student, bool>> expression);
-        Task<GetStudentDto> GetStudentByIdAsync(string studentId);
-
-        Task<bool> RemoveStudentAsync(string studentId);
-        Task<bool> RemoveStudentAsync(Student student);
-        Task<bool> RemoveAllStudentsWhereAsync(Expression<Func<Student, bool>> expression);
-
-        Task<bool> AddStudentAsync(CreateStudentDto student);
-        Task<bool> AddStudentsAsync(IEnumerable<CreateStudentDto> students);
         
         
-        Task<bool> UpdateStudentAsync(string studentId, CreateStudentDto studentDto);
+        
 
     }
 }

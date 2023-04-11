@@ -8,5 +8,6 @@ namespace Api.Application.DTO.Create
 {
     public class CreateInstructorDto
     {
+        public string? Id { get; set; }
     }
 }

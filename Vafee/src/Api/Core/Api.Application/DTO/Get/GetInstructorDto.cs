@@ -8,5 +8,8 @@ namespace Api.Application.DTO.Get
 {
     public class GetInstructorDto
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string FullName { get; set; }
     }
 }

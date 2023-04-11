@@ -77,7 +77,6 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("DepartmentId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Email")
@@ -314,7 +313,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasBaseType("Api.Domain.Models.BaseEntity");
 
                     b.Property<string>("DepartmentId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasIndex("DepartmentId");
@@ -331,7 +329,6 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("DepartmentId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
@@ -339,7 +336,6 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("InstructorId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasIndex("DepartmentId");
@@ -384,7 +380,6 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasBaseType("Api.Domain.Models.BaseEntity");
 
                     b.Property<string>("CommunityId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
@@ -418,9 +413,7 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Api.Domain.Models.Department", "Department")
                         .WithMany("Users")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });
@@ -525,9 +518,7 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Api.Domain.Models.Department", "Department")
                         .WithMany("Communities")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.Navigation("Department");
                 });
@@ -536,15 +527,11 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Api.Domain.Models.Department", "Department")
                         .WithMany("Courses")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("Api.Domain.Models.Instructor", "Instructor")
                         .WithMany("Courses")
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("InstructorId");
 
                     b.Navigation("Department");
 
@@ -566,9 +553,7 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     b.HasOne("Api.Domain.Models.Community", "Community")
                         .WithMany("Rooms")
-                        .HasForeignKey("CommunityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CommunityId");
 
                     b.Navigation("Community");
                 });

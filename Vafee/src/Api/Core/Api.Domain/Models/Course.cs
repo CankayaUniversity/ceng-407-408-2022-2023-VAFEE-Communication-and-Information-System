@@ -11,11 +11,11 @@ namespace Api.Domain.Models
         public string Code { get; set; }
         public string Description { get; set; }
 
-        public string InstructorId { get; set; }
-        public Instructor Instructor { get; set; }
+        public string? InstructorId { get; set; }
+        public Instructor? Instructor { get; set; }
 
-        public string DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public string? DepartmentId { get; set; }
+        public Department? Department { get; set; }
 
         public List<Student> Students { get; set; }
     }

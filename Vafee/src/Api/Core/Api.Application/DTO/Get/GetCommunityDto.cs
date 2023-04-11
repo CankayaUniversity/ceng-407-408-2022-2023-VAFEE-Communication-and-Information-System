@@ -2,5 +2,5 @@
 
 public class GetCommunityDto
 {
-    
+    public string? DepartmentId { get; set; }
 }

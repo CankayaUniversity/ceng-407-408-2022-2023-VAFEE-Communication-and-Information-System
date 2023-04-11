@@ -67,7 +67,7 @@ namespace Infrastructure.Persistence.Migrations
                     FirstName = table.Column<string>(type: "text", nullable: false),
                     LastName = table.Column<string>(type: "text", nullable: false),
                     Image = table.Column<string>(type: "text", nullable: true),
-                    DepartmentId = table.Column<string>(type: "text", nullable: false),
+                    DepartmentId = table.Column<string>(type: "text", nullable: true),
                     UserType = table.Column<string>(type: "text", nullable: false),
                     RollNumber = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -92,8 +92,7 @@ namespace Infrastructure.Persistence.Migrations
                         name: "FK_AspNetUsers_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -102,7 +101,7 @@ namespace Infrastructure.Persistence.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    DepartmentId = table.Column<string>(type: "text", nullable: false)
+                    DepartmentId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -111,8 +110,7 @@ namespace Infrastructure.Persistence.Migrations
                         name: "FK_Communities_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -208,8 +206,8 @@ namespace Infrastructure.Persistence.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     Code = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    InstructorId = table.Column<string>(type: "text", nullable: false),
-                    DepartmentId = table.Column<string>(type: "text", nullable: false)
+                    InstructorId = table.Column<string>(type: "text", nullable: true),
+                    DepartmentId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -218,14 +216,12 @@ namespace Infrastructure.Persistence.Migrations
                         name: "FK_Courses_AspNetUsers_InstructorId",
                         column: x => x.InstructorId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Courses_Departments_DepartmentId",
                         column: x => x.DepartmentId,
                         principalTable: "Departments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -281,7 +277,7 @@ namespace Infrastructure.Persistence.Migrations
                     Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
-                    CommunityId = table.Column<string>(type: "text", nullable: false)
+                    CommunityId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -290,8 +286,7 @@ namespace Infrastructure.Persistence.Migrations
                         name: "FK_Rooms_Communities_CommunityId",
                         column: x => x.CommunityId,
                         principalTable: "Communities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(

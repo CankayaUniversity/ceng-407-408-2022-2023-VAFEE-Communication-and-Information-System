@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Application.DTO.Create;
+using Api.Application.DTO.Get;
 using Api.Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Api.Domain.Models;
 using Infrastructure.Persistence.Context;
+using Mapster;
 
 namespace WebApi.Controllers
 {
@@ -15,109 +18,97 @@ namespace WebApi.Controllers
     [ApiController]
     public class InstructorsController : ControllerBase
     {
-        private readonly VafeeContext _context;
         private readonly IInstructorService _instructorService;
 
-        public InstructorsController(VafeeContext context,IInstructorService instructorService)
+        public InstructorsController(IInstructorService instructorService)
         {
-            _context = context;
             _instructorService = instructorService;
+
         }
 
-        // GET: api/Instructors
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Instructor>>> GetInstructors()
+        [Route("GetAll")]
+        public async Task<ActionResult<IEnumerable<GetInstructorDto>>> GetInstructors()
         {
-            return Ok(_instructorService.GetAllInstructors());
-        }
+            var result = await _instructorService.GetAllAsync();
 
-        // GET: api/Instructors/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Instructor>> GetInstructor(string id)
-        {
-          if (_context.Instructors == null)
-          {
-              return NotFound();
-          }
-            var instructor = await _context.Instructors.FindAsync(id);
-
-            if (instructor == null)
+            if (result.Success)
             {
-                return NotFound();
+                return Ok(result.Data.Adapt<IEnumerable<GetInstructorDto>>());
             }
 
-            return instructor;
+            return NotFound();
         }
 
-        // PUT: api/Instructors/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutInstructor(string id, Instructor instructor)
+        [HttpGet]
+        [Route("GetById/{id}")]
+        public async Task<ActionResult<GetInstructorDto>> GetInstructor(string id)
         {
-            if (id != instructor.Id)
+            var result = await _instructorService.GetByIdAsync(id);
+            if (result.Success)
+            {
+                return Ok(result.Data.Adapt<GetInstructorDto>());
+            }
+
+            return NotFound();
+        }
+
+        [HttpPut]
+        [Route("Update/{id}")]
+        public async Task<IActionResult> UpdateInstructor(string id, [FromForm] CreateInstructorDto instructorDto)
+        {
+            if (id != instructorDto.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(instructor).State = EntityState.Modified;
+            var getResult = await _instructorService.GetByIdAsync(id);
+            var originalRecord = getResult.Data;
 
-            try
+            if (originalRecord == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!InstructorExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return NoContent();
+            instructorDto.Adapt(originalRecord);
+            var result = await _instructorService.UpdateAsync(originalRecord);
+
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+
+            return BadRequest(result.Message);
         }
 
-        // POST: api/Instructors
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Instructor>> PostInstructor(Instructor instructor)
+        [Route("Create")]
+        public async Task<ActionResult<Instructor>> CreateInstructor(CreateInstructorDto instructorDto)
         {
-          if (_context.Instructors == null)
-          {
-              return Problem("Entity set 'VafeeContext.Instructors'  is null.");
-          }
-            _context.Instructors.Add(instructor);
-            await _context.SaveChangesAsync();
+            var record = instructorDto.Adapt<Instructor>();
+            var result = await _instructorService.AddAsync(record);
 
-            return CreatedAtAction("GetInstructor", new { id = instructor.Id }, instructor);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+
+            return BadRequest(result.Message);
         }
 
-        // DELETE: api/Instructors/5
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteInstructor(string id)
         {
-            if (_context.Instructors == null)
+            var result = await _instructorService.DeleteAsync(id);
+
+            if (result.Success)
             {
-                return NotFound();
-            }
-            var instructor = await _context.Instructors.FindAsync(id);
-            if (instructor == null)
-            {
-                return NotFound();
+                return Ok(result.Message);
             }
 
-            _context.Instructors.Remove(instructor);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool InstructorExists(string id)
-        {
-            return (_context.Instructors?.Any(e => e.Id == id)).GetValueOrDefault();
+            return BadRequest(result.Message);
         }
     }
 }

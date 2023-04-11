@@ -14,8 +14,8 @@ namespace Api.Domain.Models
         //public List<Student> Students { get; set; }
         //public List<Instructor> Instructors { get; set; }
 
-        public string DepartmentId { get; set; }
-        public Department Department { get; set; }
+        public string? DepartmentId { get; set; }
+        public Department? Department { get; set; }
 
     }
 }
