@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Infrastructure.Persistence.Context;
 
 namespace Infrastructure.Persistence.EntityConfigs.Identity
 {
@@ -17,13 +18,12 @@ namespace Infrastructure.Persistence.EntityConfigs.Identity
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-
             builder.HasIndex(u => u.Email).IsUnique();
             builder.HasIndex(u => u.UserName);
-            
+
             builder.Property(u => u.Id).HasValueGenerator<UserIdGenerator>();
-            builder.Property(u => u.UserName).HasValueGenerator<UserNameGenerator>();
-            builder.Property(u => u.Email).HasValueGenerator<UserEmailGenerator>();
+            // builder.Property(u => u.UserName).HasValueGenerator<UserNameGenerator>();
+            // builder.Property(u => u.Email).HasValueGenerator<UserEmailGenerator>();
 
             builder.Ignore(u => u.IsOnline);
             builder.Ignore(u => u.FullName);
@@ -41,19 +41,25 @@ namespace Infrastructure.Persistence.EntityConfigs.Identity
 
         public override string Next(EntityEntry entry)
         {
-            throw new NotImplementedException();
+            var user = (User)entry.Entity;
+            Random random = new Random();
+            int randomNumber = random.Next(1000, 10000);
+
+
+            return randomNumber + user.FullName + "@vafee.com";
         }
     }
 
-    internal class UserNameGenerator : ValueGenerator<string>
-    {
-        public override bool GeneratesTemporaryValues => false;
-
-        public override string Next(EntityEntry entry)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    // internal class UserNameGenerator : ValueGenerator<string>
+    // {
+    //     public override bool GeneratesTemporaryValues => false;
+    //
+    //     public override string Next(EntityEntry entry)
+    //     {
+    //         var user = (User)entry.Entity;
+    //         return 
+    //     }
+    // }
 
     //todo Tüm User sınıfındaki kullanıcılar için idler aşağıdaki kurala göre üretiliyor. Aynı işlemi base entity sınıfına da uygula
     internal class UserIdGenerator : ValueGenerator<string>
@@ -62,21 +68,19 @@ namespace Infrastructure.Persistence.EntityConfigs.Identity
 
         public override string Next(EntityEntry entry)
         {
-
             // todo Eğer kullanıcının tipini (Student - Instructor) bir şekilde entry üzerinden belirleyebilirsen
             // 2 farklı tür için farklı id kuralları oluşturabilirsin
 
 
-            // Kullanıcılar için özel id oluşturma kısmı
-            var result = entry switch
-            {
-                
-                _ => "BALCIIIII ==>|**|<== " + Guid.NewGuid().ToString()
-            };
+            // // Kullanıcılar için özel id oluşturma kısmı
+            // var result = entry switch
+            // {
+            //     
+            //     _ => "BALCIIIII ==>|**|<== " + Guid.NewGuid().ToString()
+            // };
 
 
-            return result;
-
+            return Guid.NewGuid().ToString();
         }
     }
 }

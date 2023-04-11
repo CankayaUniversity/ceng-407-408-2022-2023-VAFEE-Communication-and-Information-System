@@ -23,7 +23,16 @@ public class CourseService : ICourseService
 
     public IQueryable<GetCourseDto> GetAllCourses()
     {
-        return _context.Courses.AsNoTrackingWithIdentityResolution().Adapt<IQueryable<GetCourseDto>>();
+        try
+        {
+            return _context.Courses.AsNoTrackingWithIdentityResolution().Adapt<IQueryable<GetCourseDto>>();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
     }
 
     public Task<IQueryable<GetCourseDto>> GetAllCoursesWhereAsync(Expression<Func<Course, bool>> expression)

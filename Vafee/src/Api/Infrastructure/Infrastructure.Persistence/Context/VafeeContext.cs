@@ -1,6 +1,5 @@
 ﻿using Api.Domain.Models;
 using Api.Domain.Models.Identity;
-using Infrastructure.Persistence.DataSeed;
 using Infrastructure.Persistence.EntityConfigs;
 using Infrastructure.Persistence.EntityConfigs.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -73,16 +72,7 @@ namespace Infrastructure.Persistence.Context
 
 
 
-            // Db'de veri yoksa initialize et.
-            bool isEmpty = true;
-
-            foreach (var entityType in Model.GetEntityTypes())
-            {
-                
-            }
-
-
-            builder.PopulateDbContext();
+            
         }
 
 

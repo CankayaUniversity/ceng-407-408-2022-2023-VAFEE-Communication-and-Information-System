@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(VafeeContext))]
-    [Migration("20230404094044_init")]
+    [Migration("20230408100527_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -95,11 +95,6 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("IsOnline")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("LastName")
