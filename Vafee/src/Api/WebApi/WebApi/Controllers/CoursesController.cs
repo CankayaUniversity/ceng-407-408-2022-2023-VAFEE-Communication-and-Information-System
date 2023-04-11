@@ -22,19 +22,11 @@ namespace WebApi.Controllers
 
         
         [HttpGet]
-        public ActionResult<List<GetCourseDto>> GetCourses()
+        public async Task<ActionResult<List<GetCourseDto>>> GetCourses()
         {
 
-            try
-            {
-                return Ok(_courseService.GetAllCourses().ToList());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            
+            return Ok(await _courseService.GetAllCoursesAsync());
+
         }
         
 
@@ -42,18 +34,18 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GetCourseDto>> GetCourses(string id)
         {
-            return await _courseService.GetCourseByIdAsync(id);
+            return Ok();
         }
 
 
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCourse(string id, [FromForm] CreateCourseDto courseDto)
         {
-            var result = await _courseService.UpdateCourseAsync(id, courseDto);
-            if (result)
-            {
-                return Ok();
-            }
+            //var result = await _courseService.UpdateCourseAsync(id, courseDto);
+            //if (result)
+            //{
+            //    return Ok();
+            //}
 
             return BadRequest();
         }
@@ -61,11 +53,11 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Course>> PostCourse(CreateCourseDto courseDto)
         {
-            var result = await _courseService.AddCourseAsync(courseDto);
-            if (result)
-            {
-                return Ok();
-            }
+            //var result = await _courseService.AddCourseAsync(courseDto);
+            //if (result)
+            //{
+            //    return Ok();
+            //}
 
             return BadRequest();
         }
@@ -74,12 +66,12 @@ namespace WebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCourse(string id)
         {
-            var result = await _courseService.RemoveCourseAsync(id);
+            //var result = await _courseService.RemoveCourseAsync(id);
 
-            if (result)
-            {
-                return Ok();
-            }
+            //if (result)
+            //{
+            //    return Ok();
+            //}
 
             return BadRequest();
 

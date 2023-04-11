@@ -11783,35 +11783,37 @@
     ]
   },
   "packageFolders": {
-    "/home/estnml/.nuget/packages/": {}
+    "C:\\Users\\enamli\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/WebApi/WebApi/WebApi.csproj",
+      "projectUniqueName": "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\WebApi\\WebApi\\WebApi.csproj",
       "projectName": "WebApi",
-      "projectPath": "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/WebApi/WebApi/WebApi.csproj",
-      "packagesPath": "/home/estnml/.nuget/packages/",
-      "outputPath": "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/WebApi/WebApi/obj/",
+      "projectPath": "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\WebApi\\WebApi\\WebApi.csproj",
+      "packagesPath": "C:\\Users\\enamli\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\WebApi\\WebApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/estnml/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\enamli\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/Core/Api.Application/Api.Application.csproj": {
-              "projectPath": "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/Core/Api.Application/Api.Application.csproj"
+            "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\Core\\Api.Application\\Api.Application.csproj": {
+              "projectPath": "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\Core\\Api.Application\\Api.Application.csproj"
             },
-            "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/Infrastructure/Infrastructure.Persistence/Infrastructure.Persistence.csproj": {
-              "projectPath": "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/Infrastructure/Infrastructure.Persistence/Infrastructure.Persistence.csproj"
+            "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\Infrastructure\\Infrastructure.Persistence\\Infrastructure.Persistence.csproj": {
+              "projectPath": "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\Infrastructure\\Infrastructure.Persistence\\Infrastructure.Persistence.csproj"
             }
           }
         }
@@ -11856,12 +11858,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.3, 7.0.3]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -11870,7 +11866,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.103/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

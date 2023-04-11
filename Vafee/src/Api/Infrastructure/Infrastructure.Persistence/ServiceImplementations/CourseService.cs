@@ -21,69 +21,28 @@ public class CourseService : ICourseService
         _mapper = mapper;
     }
 
-    public IQueryable<GetCourseDto> GetAllCourses()
-    {
-        try
-        {
-            return _context.Courses.AsNoTrackingWithIdentityResolution().Adapt<IQueryable<GetCourseDto>>();
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-        
-    }
-
-    public Task<IQueryable<GetCourseDto>> GetAllCoursesWhereAsync(Expression<Func<Course, bool>> expression)
+    public Task<bool> AddCourseAsync(CreateCourseDto course)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<GetCourseDto> GetCourseByIdAsync(string courseId)
-    {
-        var record = await _context.Courses.FindAsync(courseId);
-        return record?.Adapt<GetCourseDto>();
-    }
-
-    public Task<bool> RemoveAllCoursesWhereAsync(Expression<Func<Course, bool>> expression)
+    public Task<bool> DeleteCourseAsync(string id)
     {
         throw new NotImplementedException();
     }
 
-    public async Task<bool> AddCourseAsync(CreateCourseDto course)
+    public async Task<IEnumerable<GetCourseDto>> GetAllCoursesAsync()
     {
-        var record = course.Adapt<Course>();
-        await _context.Courses.AddAsync(record);
-        return await _context.SaveChangesAsync() > 0;
+        var records = await _context.Courses.ToListAsync();
+        return records.Adapt<IEnumerable<GetCourseDto>>();
     }
 
-    public async Task<bool> AddCoursesAsync(IEnumerable<CreateCourseDto> courses)
+    public Task<GetCourseDto> GetCourseByIdAsync(string id)
     {
-        var records = courses.Adapt<IEnumerable<Course>>();
-        await _context.Courses.AddRangeAsync(records);
-        return await _context.SaveChangesAsync() > 0;
+        throw new NotImplementedException();
     }
 
-    public async Task<bool> RemoveCourseAsync(string courseId)
-    {
-        var courseToDelete = await _context.Courses.FindAsync(courseId);
-        if (courseToDelete == null)
-        {
-            return false;
-        }
-
-        _context.Courses.Remove(courseToDelete);
-        return await _context.SaveChangesAsync() > 0;
-    }
-
-    public async Task<bool> RemoveCourseAsync(Course course)
-    {
-        _context.Courses.Remove(course);
-        return await _context.SaveChangesAsync() > 0;
-    }
-
-    public Task<bool> UpdateCourseAsync(string courseId, CreateCourseDto courseDto)
+    public Task<bool> UpdateCourseAsync(CreateCourseDto course)
     {
         throw new NotImplementedException();
     }

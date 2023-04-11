@@ -7,16 +7,10 @@ namespace Api.Application.Services;
 
 public interface ICourseService
 {
-    IQueryable<GetCourseDto> GetAllCourses();
-    Task<IQueryable<GetCourseDto>> GetAllCoursesWhereAsync(Expression<Func<Course, bool>> expression);
-    Task<GetCourseDto> GetCourseByIdAsync(string courseId);
-
-    Task<bool> RemoveCourseAsync(string courseId);
-    Task<bool> RemoveCourseAsync(Course course);
-    Task<bool> RemoveAllCoursesWhereAsync(Expression<Func<Course, bool>> expression);
-
+    // todo bool dönen iþlemlerde, özel bir dönüþ deðeri kullanýlabilir. (Daha fazla bilgi vermesi amacýyla)
+    Task<GetCourseDto> GetCourseByIdAsync(string id);
+    Task<IEnumerable<GetCourseDto>> GetAllCoursesAsync();
     Task<bool> AddCourseAsync(CreateCourseDto course);
-    Task<bool> AddCoursesAsync(IEnumerable<CreateCourseDto> courses);
-
-    Task<bool> UpdateCourseAsync(string courseId, CreateCourseDto courseDto);
+    Task<bool> UpdateCourseAsync(CreateCourseDto course);
+    Task<bool> DeleteCourseAsync(string id);
 }

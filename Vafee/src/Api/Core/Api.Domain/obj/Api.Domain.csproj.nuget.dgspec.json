@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/Core/Api.Domain/Api.Domain.csproj": {}
+    "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\Core\\Api.Domain\\Api.Domain.csproj": {}
   },
   "projects": {
-    "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/Core/Api.Domain/Api.Domain.csproj": {
+    "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\Core\\Api.Domain\\Api.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/Core/Api.Domain/Api.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\Core\\Api.Domain\\Api.Domain.csproj",
         "projectName": "Api.Domain",
-        "projectPath": "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/Core/Api.Domain/Api.Domain.csproj",
-        "packagesPath": "/home/estnml/.nuget/packages/",
-        "outputPath": "/home/estnml/Code/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/Vafee/src/Api/Core/Api.Domain/obj/",
+        "projectPath": "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\Core\\Api.Domain\\Api.Domain.csproj",
+        "packagesPath": "C:\\Users\\enamli\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\enamli\\Desktop\\ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System\\Vafee\\src\\Api\\Core\\Api.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/estnml/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\enamli\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -54,18 +56,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[7.0.3, 7.0.3]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.103/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
