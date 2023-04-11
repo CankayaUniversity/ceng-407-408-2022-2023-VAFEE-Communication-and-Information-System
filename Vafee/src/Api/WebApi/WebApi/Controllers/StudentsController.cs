@@ -24,14 +24,13 @@ namespace WebApi.Controllers
     {
         private readonly IStudentService _studentService;
 
-        public StudentsController(VafeeContext context, UserManager<User> userManager, IStudentService studentService)
+        public StudentsController(IStudentService studentService)
         {
             _studentService = studentService;
         }
 
         // GET: api/Students
         [HttpGet]
-        [Route("GetStudents")]
         public ActionResult<IEnumerable<GetStudentDto>> GetStudents()
         {
             return Ok(_studentService.GetAllStudents());

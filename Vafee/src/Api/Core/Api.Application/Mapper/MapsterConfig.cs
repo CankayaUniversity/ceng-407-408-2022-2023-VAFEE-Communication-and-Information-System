@@ -12,10 +12,9 @@ namespace Api.Application.Mapper
 {
     public class MapsterConfig : IRegister
     {
-        
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Student,GetStudentDto>()
+            config.NewConfig<Student, GetStudentDto>()
                 .Map(dto => dto.Email, s => s.Email)
                 .Map(dto => dto.UserName, s => s.UserName)
                 .Map(dto => dto.FirstName, s => s.FirstName)
@@ -23,12 +22,10 @@ namespace Api.Application.Mapper
                 .Map(dto => dto.DepartmentId, s => s.DepartmentId)
                 .Map(dto => dto.PhoneNumber, s => s.PhoneNumber)
                 .Map(dto => dto.RollNumber, s => s.RollNumber);
-            
-            
-            
+
+            config.NewConfig<Course, GetCourseDto>()
+                .Map(dto => dto.Name, c => c.Name)
+                .Map(dto => dto.Code, c => c.Code);
         }
     }
-
-
-   
 }

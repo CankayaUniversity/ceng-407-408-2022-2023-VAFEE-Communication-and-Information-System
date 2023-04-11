@@ -5,6 +5,7 @@ using Api.Domain.Models;
 using Infrastructure.Persistence.ServiceImplementations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Controllers
 {
@@ -19,12 +20,23 @@ namespace WebApi.Controllers
             _courseService = courseService;
         }
 
-
+        
         [HttpGet]
-        public ActionResult<IEnumerable<GetCourseDto>> GetCourses()
+        public ActionResult<List<GetCourseDto>> GetCourses()
         {
-            return Ok(_courseService.GetAllCourses());
+
+            try
+            {
+                return Ok(_courseService.GetAllCourses().ToList());
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
+        
 
         
         [HttpGet("{id}")]

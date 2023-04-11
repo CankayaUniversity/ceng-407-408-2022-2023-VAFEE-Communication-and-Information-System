@@ -40,7 +40,7 @@ namespace Api.Application
             var config = TypeAdapterConfig.GlobalSettings;
             
             config.Scan(Assembly.GetExecutingAssembly());
-
+        
             services.AddSingleton(config);
             services.AddScoped<IMapper, ServiceMapper>();
             

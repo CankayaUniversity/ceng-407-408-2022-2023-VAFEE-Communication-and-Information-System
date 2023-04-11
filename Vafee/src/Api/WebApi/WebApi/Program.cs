@@ -25,7 +25,6 @@ var trustedClientAddresses = new string[] { "", "" };
 
 // Add services to the container.
 
-builder.Services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -41,8 +40,8 @@ builder.Services.AddSwaggerGen();
 // Db, authentication*, signalr*, (usermanager, rolemanager, signinmanager), vue ve flutter uygulamas� i�in cors*,mapper (mapster)
 // * olanlar�n ayarlar� yap�ld�ktan sonra uygun yerlere ekle. (app.UseCors() ...)
 
-builder.Services.RegisterInfrastructureServices(); // Db, (usermanager, rolemanager, signinmanager)
 builder.Services.RegisterApplicationServices(); // mapper
+builder.Services.RegisterInfrastructureServices(); // Db, (usermanager, rolemanager, signinmanager)
 
 
 builder.Services.AddSignalR(options =>
@@ -55,7 +54,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
+    
 }).AddJwtBearer(options =>
 {
     options.TokenValidationParameters = new()
@@ -71,7 +70,7 @@ builder.Services.AddAuthentication(options =>
 
         ValidIssuer = builder.Configuration["Jwt:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"])),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)),
 
     };
 

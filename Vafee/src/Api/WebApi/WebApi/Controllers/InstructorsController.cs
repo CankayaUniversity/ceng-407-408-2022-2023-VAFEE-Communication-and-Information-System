@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Api.Application.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,21 +16,19 @@ namespace WebApi.Controllers
     public class InstructorsController : ControllerBase
     {
         private readonly VafeeContext _context;
+        private readonly IInstructorService _instructorService;
 
-        public InstructorsController(VafeeContext context)
+        public InstructorsController(VafeeContext context,IInstructorService instructorService)
         {
             _context = context;
+            _instructorService = instructorService;
         }
 
         // GET: api/Instructors
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Instructor>>> GetInstructors()
         {
-          if (_context.Instructors == null)
-          {
-              return NotFound();
-          }
-            return await _context.Instructors.ToListAsync();
+            return Ok(_instructorService.GetAllInstructors());
         }
 
         // GET: api/Instructors/5
