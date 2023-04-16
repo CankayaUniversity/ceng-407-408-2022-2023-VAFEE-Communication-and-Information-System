@@ -14,7 +14,7 @@
           <div class="w-10 rounded-full">
             <img
               alt="..."
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=crop&amp;w=1051&amp;q=80"
+              src="https://pps.whatsapp.net/v/t61.24694-24/161599179_816528216240734_4810440855987425746_n.jpg?ccb=11-4&oh=01_AdQkdCTOkfFCAR8NDlx9jjqVCScXhDF2GoVc8fhnJGmoNQ&oe=6448E801"
               class="w-full align-middle rounded-t-lg"
             />
           </div>
