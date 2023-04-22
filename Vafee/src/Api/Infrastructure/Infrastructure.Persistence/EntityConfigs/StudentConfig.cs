@@ -46,7 +46,7 @@ namespace Infrastructure.Persistence.EntityConfigs
         public override string Next(EntityEntry entry)
         {
 
-            return "";
+            return "vafee" + Guid.NewGuid().ToString();
         }
     }
 }

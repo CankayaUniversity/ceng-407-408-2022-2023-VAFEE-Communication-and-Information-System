@@ -4,6 +4,7 @@ using Api.Domain.Models.Identity;
 using Bogus;
 using Infrastructure.Persistence.Context;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -13,13 +14,29 @@ namespace WebApi.Controllers
     public class TestController : ControllerBase
     {
         private readonly VafeeContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public TestController(VafeeContext context)
+        public TestController(VafeeContext context,UserManager<User> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
-        
-        
+
+        private async Task GenerateRandomPassword(IEnumerable<User> users)
+        {
+            var random = new Random();
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+            foreach (User user in users) {
+                int passwordLength = 8; // Şifre uzunluğu burada belirleniyor
+                char[] password = new char[passwordLength];
+                for (int i = 0; i < passwordLength; i++) {
+                    password[i] = chars[random.Next(chars.Length)];
+                }
+
+                await _userManager.CreateAsync(user, new string(password));
+            }
+        }
 
         [HttpGet]
         [Route("GenerateRandomRelatedData")]
@@ -75,10 +92,14 @@ namespace WebApi.Controllers
                 Console.WriteLine(student.Email);
             }
 
+            
+            await GenerateRandomPassword(testInstructors);
+            await GenerateRandomPassword(testStudents);
+
             await _context.Communities.AddRangeAsync(testCommunities);
-            await _context.Students.AddRangeAsync(testStudents);
+            // await _context.Students.AddRangeAsync(testStudents);
             await _context.Courses.AddRangeAsync(testCourses);
-            await _context.Instructors.AddRangeAsync(testInstructors);
+            // await _context.Instructors.AddRangeAsync(testInstructors);
             await _context.Departments.AddRangeAsync(testDepartments);
             
             await _context.SaveChangesAsync();

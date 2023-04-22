@@ -61,7 +61,7 @@ namespace WebApi.Controllers
                 AccessToken = GenerateAccessToken(userClaims),
                 RefreshToken = GenerateRefreshToken()
             };
-
+            
             return Ok(token);
         }
 
