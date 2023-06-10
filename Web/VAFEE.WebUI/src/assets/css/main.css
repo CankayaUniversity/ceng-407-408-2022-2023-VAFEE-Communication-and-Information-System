@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.dropdown .dropdown-content {
+    @apply transition-all;
+}
+
+
+
+.router-link-active {}
