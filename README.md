@@ -22,3 +22,5 @@ VAFEE Communication and Information System
 - [Project Report](https://github.com/CankayaUniversity/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/wiki/Project-Report)
 - [Project Presentation](https://github.com/CankayaUniversity/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/wiki/CENG-407-Presentation)
 - [VAFEE Poster](https://github.com/CankayaUniversity/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/files/11708871/VAFEEposter.pdf)
+- [Demo Video](https://github.com/CankayaUniversity/ceng-407-408-2022-2023-VAFEE-Communication-and-Information-System/wiki/Project-Demo-Video)
+
